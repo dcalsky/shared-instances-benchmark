@@ -21,12 +21,13 @@ func (r *CustomRoute) Hello(c echo.Context) error {
 	return c.String(http.StatusOK, r.Content)
 }
 
+var customContext = &CustomContext{
+	Content: "Custom",
+}
+
 // Passing extended custom context
 func BenchmarkContext(b *testing.B) {
 	e := echo.New()
-	customContext := &CustomContext{
-		Content: "Custom",
-	}
 	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			customContext.Context = c
